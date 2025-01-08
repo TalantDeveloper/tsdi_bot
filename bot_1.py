@@ -36,6 +36,7 @@ employees = ["Ergashov Botirjon", "Qarshiyev Otabek", "Yusupov Nurbek"]
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text."""
+    print(update.message)
     query = update.callback_query
 
     # CallbackQueries need to be answered, even if no notification to the user is needed
