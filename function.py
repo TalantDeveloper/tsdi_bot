@@ -78,7 +78,7 @@ def update_rector_voice(rector_id):
         print(read_data())
 
 
-# update_rector_voice(0)
+# update_rector_voice(1)
 
 
 
