@@ -1,0 +1,51 @@
+from telebot import types, TeleBot
+from keys import TOKEN
+from button import create_zamDekan_btn, create_result_btn
+from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
+    create_voter, update_voter_table
+from checkers import first_checker, checker_voter, cheklov_votes
+
+token = TOKEN
+bot = TeleBot(token)
+
+
+@bot.message_handler(commands=['start'])
+def start(msg: types.Message):
+    if checker_voter(bot, msg) and cheklov_votes(bot):
+        first_checker(bot, msg)
+    else:
+        bot.send_message(
+            msg.from_user.id,
+            text=f"Natijani tekshirishingiz mumkin!!!",
+            reply_markup=create_result_btn())
+
+
+@bot.callback_query_handler(func=lambda x: x.data)
+def query(msg: types.CallbackQuery):
+    bot.delete_message(msg.from_user.id, msg.message.id)
+    if msg.data == "checksub":
+        first_checker(bot, msg)
+    elif msg.data[:5] == 'dekan':
+        dekan_id = int(msg.data[5:])
+        add_dekan_voice(dekan_id)
+        dekan = read_dekan_table()[dekan_id]
+        bot.send_message(msg.from_user.id, text=f"Siz {dekan[1]} ga ovoz berdingiz")
+        bot.send_message(msg.from_user.id,
+                         text="Toshkent Davlat Stomatologiya Institutida "
+                              "eng yaxshi Yoshlar bilan ishlash bo'yicha dekam muoviniga"
+                              "ovoz bering.",
+                         reply_markup=create_zamDekan_btn())
+        create_voter(msg, dekan_id)
+
+    elif msg.data[:8] == 'zamDekan':
+        zamDekan_id = int(msg.data[8:])
+        add_zamDekan_voice(zamDekan_id)
+        zamDekan = read_dekan_table()[zamDekan_id]
+        bot.send_message(msg.from_user.id, text=f"Siz {zamDekan[1]} ga ovoz berdingiz!")
+        bot.send_message(msg.from_user.id, text=result_all())
+        update_voter_table(msg.from_user.id, zamDekan_id)
+    elif msg.data == 'result':
+        bot.send_message(msg.from_user.id, text=result_all())
+
+
+bot.polling()
