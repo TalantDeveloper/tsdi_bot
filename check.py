@@ -40,7 +40,7 @@ def query(msg: types.CallbackQuery):
     elif msg.data[:8] == 'zamDekan':
         zamDekan_id = int(msg.data[8:])
         add_zamDekan_voice(zamDekan_id)
-        zamDekan = read_zamDekan_table()[zamDekan_id]
+        zamDekan = read_zamDekan_table()[zamDekan_id - 1]
         bot.send_message(msg.from_user.id, text=f"Siz {zamDekan[1]} ga ovoz berdingiz!")
         bot.send_message(msg.from_user.id, text=result_all())
         update_voter_table(msg.from_user.id, zamDekan_id)

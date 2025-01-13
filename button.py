@@ -1,13 +1,14 @@
 from telebot import types
 from function import read_dekan_table, read_zamDekan_table
-from keys import channel_url
+from keys import channel_url, channel_url1
 
 
 check_btn = types.InlineKeyboardMarkup(row_width=1)
 
 check_btn.add(
-    types.InlineKeyboardButton(text="1-kanalimiz", url=channel_url),
-    types.InlineKeyboardButton(text="✅-Tekshirish", callback_data="checksub"),
+    types.InlineKeyboardButton(text="1 - kanalimiz", url=channel_url),
+    types.InlineKeyboardButton(text="2 - kanalimiz", url=channel_url1),
+    types.InlineKeyboardButton(text="✅ Tekshirish", callback_data="checksub"),
 )
 
 

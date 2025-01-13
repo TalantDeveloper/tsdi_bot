@@ -1,16 +1,22 @@
 from button import check_btn, create_dekan_btn
 from function import read_dekan_table, read_voter_table, update_voter_table, read_zamDekan_table
-from keys import channel
+from keys import channel, channel1
 
 
 def first_checker(bot, msg):
     check_user = bot.get_chat_member(channel, user_id=msg.from_user.id).status
+    check_user1 = bot.get_chat_member(channel1, user_id=msg.from_user.id).status
     if check_user == 'member' or check_user == 'creator' or check_user == 'admin':
-        bot.send_message(msg.from_user.id,
-                         text="Assalomu alaykun!\n"
-                              "Toshkent Davlat Stomatologiya Institutida "
-                              "eng yaxshi Dekanga ovoz berishingiz mumkin.",
-                         reply_markup=create_dekan_btn())
+        if check_user1 == 'member' or check_user1 == 'creator' or check_user1 == 'admin':
+            bot.send_message(msg.from_user.id,
+                             text="Assalomu alaykun!\n"
+                                  "Toshkent Davlat Stomatologiya Institutida "
+                                  "eng yaxshi Dekanga ovoz berishingiz mumkin.",
+                             reply_markup=create_dekan_btn())
+        else:
+            bot.send_message(msg.from_user.id,
+                             text="Kanalimizga obuna bo'ling",
+                             reply_markup=check_btn)
     else:
         bot.send_message(msg.from_user.id,
                          text="Kanalimizga obuna bo'ling",
@@ -58,4 +64,3 @@ def send_admin_message(msg):
         if voter[1] == user_id:
             return voter
     return user_id
-
