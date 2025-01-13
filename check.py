@@ -3,7 +3,7 @@ from keys import TOKEN
 from button import create_zamDekan_btn, create_result_btn
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
     create_voter, update_voter_table
-from checkers import first_checker, checker_voter, cheklov_votes
+from checkers import first_checker, checker_voter, cheklov_votes, send_admin_message
 
 token = TOKEN
 bot = TeleBot(token)
@@ -44,6 +44,8 @@ def query(msg: types.CallbackQuery):
         bot.send_message(msg.from_user.id, text=f"Siz {zamDekan[1]} ga ovoz berdingiz!")
         bot.send_message(msg.from_user.id, text=result_all())
         update_voter_table(msg.from_user.id, zamDekan_id)
+        vote = send_admin_message(msg)
+        bot.send_message(556841744, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
     elif msg.data == 'result':
         bot.send_message(msg.from_user.id, text=result_all())
 

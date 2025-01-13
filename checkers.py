@@ -49,3 +49,13 @@ def cheklov_votes(bot):
                                              "Bu haqida qayg'urish kerak")
             return False
     return True
+
+
+def send_admin_message(msg):
+    user_id = msg.from_user.id
+    voters = read_voter_table()
+    for voter in voters:
+        if voter[1] == user_id:
+            return voter
+    return user_id
+
