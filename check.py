@@ -2,7 +2,7 @@ from telebot import types, TeleBot
 from keys import TOKEN
 from button import create_zamDekan_btn, create_result_btn
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
-    create_voter, update_voter_table, read_zamDekan_table
+    create_voter, update_voter_table, read_zamDekan_table, read_voter_table
 from checkers import first_checker, checker_voter, cheklov_votes, send_admin_message
 
 token = TOKEN
@@ -11,13 +11,21 @@ bot = TeleBot(token)
 
 @bot.message_handler(commands=['start'])
 def start(msg: types.Message):
-    if checker_voter(bot, msg) and cheklov_votes(bot):
+    if cheklov_votes(bot) and checker_voter(bot, msg):
         first_checker(bot, msg)
     else:
         bot.send_message(
             msg.from_user.id,
             text=f"Natijani tekshirishingiz mumkin!!!",
             reply_markup=create_result_btn())
+
+
+@bot.message_handler(commands=['allResult'])
+def getAllResult(msg: types.Message):
+    if msg.from_user.id == 556841744:
+        voters = read_voter_table()
+        for vote in voters:
+            bot.send_message(556841744, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
 
 
 @bot.callback_query_handler(func=lambda x: x.data)

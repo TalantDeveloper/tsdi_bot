@@ -202,7 +202,7 @@ def add_zamDekan_voice(zamDekan_id):
         connection.commit()
 
 
-# add_zamDekan_voice(4)
+# add_zamDekan_voice(1)
 # print(read_zamDekan_table())
 
 
