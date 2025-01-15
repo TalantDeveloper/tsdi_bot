@@ -24,7 +24,7 @@ def insert_data():
         cursor = connection.cursor()
 
         insert_query = """INSERT INTO Rectors (name, voice) VALUES (?, ?)"""
-        rector = ("Ergashov Botirjon", 0)
+        rector = ("Name", 0)
         cursor.execute(insert_query, rector)
         connection.commit()
         print('Connected to database')
@@ -55,10 +55,10 @@ def update_data():
         cursor = connection.cursor()
         update_query = """UPDATE Rectors SET name = ?, voice = ? WHERE id = ?;"""
 
-        name = "Xaydarov Nodir"
+        name = "Name"
         voice = 0
         id = 2
-        cursor.execute(update_query, (name, +1, id))
+        cursor.execute(update_query, (name, voice, id))
         connection.commit()
 
         print(read_data())
@@ -118,7 +118,7 @@ def insert_dekan_table(dekan: tuple):
         connection.commit()
 
 
-# dekan = ("dekan_name", 0)
+# dekan = ("Name", 0)
 # insert_dekan_table(dekan)
 
 
@@ -171,10 +171,10 @@ def insert_zamDekan_table(name, voice):
         connection.commit()
 
 
-# insert_zamDekan_table("SAFAROV JO‘RABEK FATULLAYEVICH", 0)
-# insert_zamDekan_table("ASHUROV FERUZ RAXMATULLAYEVICH", 0)
-# insert_zamDekan_table("ESHMURODOV SUNNATILLA G‘ULOMOVICH", 0)
-# insert_zamDekan_table("ALIMOVA KOMILA DEKANOVNA", 0)
+# insert_zamDekan_table("Name", 0)
+# insert_zamDekan_table("Name", 0)
+# insert_zamDekan_table("Name", 0)
+# insert_zamDekan_table("Name", 0)
 
 
 def read_zamDekan_table():

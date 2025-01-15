@@ -2,7 +2,7 @@ import sqlite3
 
 from button import check_btn, create_dekan_btn
 from function import read_dekan_table, read_voter_table, update_voter_table, read_zamDekan_table
-from keys import channel, channel1
+from keys import channel, channel1, admin_id
 
 
 def first_checker(bot, msg):
@@ -38,22 +38,22 @@ def checker_voter(bot, msg):
 def cheklov_votes(bot):
     dekans = read_dekan_table()
     if len(dekans) >= 10000:
-        bot.send_message(556841744, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
+        bot.send_message(admin_id, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
                                          "Bu haqida qayg'urish kerak")
         return False
     for dekan in dekans:
         if dekan[2] >= 5000:
-            bot.send_message(556841744, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
+            bot.send_message(admin_id, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
                                              "Bu haqida qayg'urish kerak")
             return False
     zamDekans = read_zamDekan_table()
     if len(zamDekans) >= 10000:
-        bot.send_message(556841744, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
+        bot.send_message(admin_id, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
                                          "Bu haqida qayg'urish kerak")
         return False
     for zamDekan in zamDekans:
         if zamDekan[2] >= 5000:
-            bot.send_message(556841744, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
+            bot.send_message(admin_id, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
                                              "Bu haqida qayg'urish kerak")
             return False
     return True

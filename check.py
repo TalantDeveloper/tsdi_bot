@@ -1,5 +1,5 @@
 from telebot import types, TeleBot
-from keys import TOKEN
+from keys import TOKEN, admin_id
 from button import create_zamDekan_btn, create_result_btn
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
     create_voter, update_voter_table, read_zamDekan_table, read_voter_table
@@ -25,7 +25,7 @@ def getAllResult(msg: types.Message):
     if msg.from_user.id == 556841744:
         voters = read_voter_table()
         for vote in voters:
-            bot.send_message(556841744, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
+            bot.send_message(admin_id, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
 
 
 @bot.callback_query_handler(func=lambda x: x.data)
@@ -53,7 +53,7 @@ def query(msg: types.CallbackQuery):
         bot.send_message(msg.from_user.id, text=result_all())
         update_voter_table(msg.from_user.id, zamDekan_id)
         vote = send_admin_message(msg)
-        bot.send_message(556841744, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
+        bot.send_message(admin_id, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
     elif msg.data == 'result':
         bot.send_message(msg.from_user.id, text=result_all())
 
