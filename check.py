@@ -1,6 +1,6 @@
 from telebot import types, TeleBot
-from keys import TOKEN, admin_id
-from button import create_zamDekan_btn, create_result_btn
+from keys import TOKEN, admin_id, chat_id
+from button import create_zamDekan_btn, create_result_btn, create_dekan_btn
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
     create_voter, update_voter_table, read_zamDekan_table, read_voter_table
 from checkers import first_checker, checker_voter, cheklov_votes, send_admin_message
@@ -8,9 +8,13 @@ from checkers import first_checker, checker_voter, cheklov_votes, send_admin_mes
 token = TOKEN
 bot = TeleBot(token)
 
+Url = f"https://api.telegram.org/bot<yourbottoken>/sendMessage?chat_id=<yourchatid>&text=Hello World!"
 
 @bot.message_handler(commands=['start'])
 def start(msg: types.Message):
+    bot.send_photo(chat_id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
+                   caption="<p>Hello</p>",
+                   reply_markup=create_dekan_btn())
     if cheklov_votes(bot) and checker_voter(bot, msg):
         first_checker(bot, msg)
     else:

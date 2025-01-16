@@ -237,6 +237,19 @@ def read_voter_table():
         return data
 
 
+def delete_votes():
+    voters = read_voter_table()
+    for voter in voters:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+            query = f"""DELETE FROM voter WHERE id = {voter[0]};"""
+            cursor.execute(query)
+            connection.commit()
+
+
+delete_votes()
+
+
 def update_voter_table(user_id, zamDekan):
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()

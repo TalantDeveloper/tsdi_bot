@@ -30,27 +30,24 @@ def checker_voter(bot, msg):
     voters = read_voter_table()
     for voter in voters:
         if voter[1] == user_id:
-            bot.send_message(user_id, text="Siz bu tanlovda qatnashib bo'lgansiz :)")
+            bot.send_message(user_id, text="Siz ovoz berib bo'ldingiz")
             return False
     return True
 
 
 def cheklov_votes(bot):
-    dekans = read_dekan_table()
-    if len(dekans) >= 10000:
+    voters = read_voter_table()
+    if len(voters) >= 10000:
         bot.send_message(admin_id, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
                                          "Bu haqida qayg'urish kerak")
         return False
+    dekans = read_dekan_table()
     for dekan in dekans:
         if dekan[2] >= 5000:
             bot.send_message(admin_id, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
                                              "Bu haqida qayg'urish kerak")
             return False
     zamDekans = read_zamDekan_table()
-    if len(zamDekans) >= 10000:
-        bot.send_message(admin_id, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
-                                         "Bu haqida qayg'urish kerak")
-        return False
     for zamDekan in zamDekans:
         if zamDekan[2] >= 5000:
             bot.send_message(admin_id, text="Ovoz berish soni haddan tashqari oshib ketdi.\n"
