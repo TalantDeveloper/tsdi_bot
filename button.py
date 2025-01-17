@@ -2,7 +2,6 @@ from telebot import types
 from function import read_dekan_table, read_zamDekan_table
 from keys import channel_url, channel_url1
 
-
 check_btn = types.InlineKeyboardMarkup(row_width=1)
 
 check_btn.add(
@@ -36,3 +35,4 @@ def create_result_btn():
     result_btn = types.InlineKeyboardMarkup(row_width=1)
     result_btn.add(types.InlineKeyboardButton(text="Natijani tekshirish", callback_data='result'))
     return result_btn
+

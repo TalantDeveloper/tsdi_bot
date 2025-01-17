@@ -8,25 +8,24 @@ from checkers import first_checker, checker_voter, cheklov_votes, send_admin_mes
 token = TOKEN
 bot = TeleBot(token)
 
-Url = f"https://api.telegram.org/bot<yourbottoken>/sendMessage?chat_id=<yourchatid>&text=Hello World!"
 
 @bot.message_handler(commands=['start'])
 def start(msg: types.Message):
-    bot.send_photo(chat_id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
-                   caption="<p>Hello</p>",
+    bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
+                   caption="Assalomu alaykum",
                    reply_markup=create_dekan_btn())
-    if cheklov_votes(bot) and checker_voter(bot, msg):
-        first_checker(bot, msg)
-    else:
-        bot.send_message(
-            msg.from_user.id,
-            text=f"Natijani tekshirishingiz mumkin!!!",
-            reply_markup=create_result_btn())
+    # if cheklov_votes(bot) and checker_voter(bot, msg):
+    #     first_checker(bot, msg)
+    # else:
+    #     bot.send_message(
+    #         msg.from_user.id,
+    #         text=f"Natijani tekshirishingiz mumkin!!!",
+    #         reply_markup=create_result_btn())
 
 
 @bot.message_handler(commands=['allResult'])
 def getAllResult(msg: types.Message):
-    if msg.from_user.id == 556841744:
+    if msg.from_user.id == admin_id:
         voters = read_voter_table()
         for vote in voters:
             bot.send_message(admin_id, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
@@ -42,11 +41,10 @@ def query(msg: types.CallbackQuery):
         add_dekan_voice(dekan_id)
         dekan = read_dekan_table()[dekan_id - 1]
         bot.send_message(msg.from_user.id, text=f"Siz {dekan[1]} ga ovoz berdingiz")
-        bot.send_message(msg.from_user.id,
-                         text="Toshkent Davlat Stomatologiya Institutida "
-                              "eng yaxshi Yoshlar bilan ishlash bo'yicha dekam muoviniga"
-                              "ovoz bering.",
-                         reply_markup=create_zamDekan_btn())
+        bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
+                       caption="Toshkent Davlat Stomatologiya Institutida eng yaxshi Yoshlar bilan ishlash bo'yicha dekam muoviniga ovoz bering.",
+                       reply_markup=create_zamDekan_btn(),
+                       )
         create_voter(msg, dekan_id)
 
     elif msg.data[:8] == 'zamDekan':
@@ -54,12 +52,18 @@ def query(msg: types.CallbackQuery):
         add_zamDekan_voice(zamDekan_id)
         zamDekan = read_zamDekan_table()[zamDekan_id - 1]
         bot.send_message(msg.from_user.id, text=f"Siz {zamDekan[1]} ga ovoz berdingiz!")
-        bot.send_message(msg.from_user.id, text=result_all())
         update_voter_table(msg.from_user.id, zamDekan_id)
+
+        result_all(bot, msg)
+        bot.send_message(
+                    msg.from_user.id,
+            text=f"Natijani tekshirishingiz mumkin!!!",
+            reply_markup=create_result_btn())
+
         vote = send_admin_message(msg)
         bot.send_message(admin_id, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
     elif msg.data == 'result':
-        bot.send_message(msg.from_user.id, text=result_all())
+        bot.send_message(msg.from_user.id, text=result_all(bot, msg))
 
 
 bot.polling()

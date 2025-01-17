@@ -1,5 +1,9 @@
 import sqlite3
 
+from telebot import types
+
+from keys import bot_url
+
 
 def create_table():  # Create Table
     with sqlite3.connect('database.db') as connection:
@@ -237,6 +241,9 @@ def read_voter_table():
         return data
 
 
+# print(read_voter_table())
+
+
 def delete_votes():
     voters = read_voter_table()
     for voter in voters:
@@ -247,7 +254,7 @@ def delete_votes():
             connection.commit()
 
 
-delete_votes()
+# delete_votes()
 
 
 def update_voter_table(user_id, zamDekan):
@@ -258,20 +265,25 @@ def update_voter_table(user_id, zamDekan):
         connection.commit()
 
 
-def result_all():
+def result_all(bot, msg):
+    result_dekan = types.InlineKeyboardMarkup(row_width=1)
     dekans = read_dekan_table()
-    zamDekans = read_zamDekan_table()
-    dekan_text = ""
     for dekan in dekans:
-        dekan_text += f"{dekan[1]}  => {dekan[2]}\n"
-    zamDekan_text = ""
+        result_dekan.add(
+            types.InlineKeyboardButton(text=f"{dekan[1]} - {dekan[2]}", url=bot_url)
+        )
+    bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
+                   caption="Fakultet dekanlari",
+                   reply_markup=result_dekan)
+    result_zamDekan = types.InlineKeyboardMarkup(row_width=1)
+    zamDekans = read_zamDekan_table()
     for zamDekan in zamDekans:
-        zamDekan_text += f"{zamDekan[1]}  => {zamDekan[2]}\n"
-    message = (f"Dekanlar bo'yicha natijalar:\n"
-               f"{dekan_text}\n"
-               f"Yoshlar bilan ishlash bo'yicha dekam muovinlari bo'yicha natijalar\n"
-               f"{zamDekan_text}")
-    return message
+        result_zamDekan.add(
+            types.InlineKeyboardButton(text=f"{zamDekan[1]} - {zamDekan[2]}", url=bot_url)
+        )
+    bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
+                   caption="Yoshlar bilan ishlash bo'yicha dekan muovinlari",
+                   reply_markup=result_zamDekan)
 
 
 def create_voter(msg, dekan_id):
