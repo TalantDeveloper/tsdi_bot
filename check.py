@@ -1,5 +1,5 @@
 from telebot import types, TeleBot
-from keys import TOKEN, admin_id, chat_id
+from keys import TOKEN, admin_id, chat_id, photo_2, caption_2
 from button import create_zamDekan_btn, create_result_btn, create_dekan_btn
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
     create_voter, update_voter_table, read_zamDekan_table, read_voter_table
@@ -11,16 +11,13 @@ bot = TeleBot(token)
 
 @bot.message_handler(commands=['start'])
 def start(msg: types.Message):
-    bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
-                   caption="Assalomu alaykum",
-                   reply_markup=create_dekan_btn())
-    # if cheklov_votes(bot) and checker_voter(bot, msg):
-    #     first_checker(bot, msg)
-    # else:
-    #     bot.send_message(
-    #         msg.from_user.id,
-    #         text=f"Natijani tekshirishingiz mumkin!!!",
-    #         reply_markup=create_result_btn())
+    if cheklov_votes(bot) and checker_voter(bot, msg):
+        first_checker(bot, msg)
+    else:
+        bot.send_message(
+            msg.from_user.id,
+            text=f"Natijani ko'rish 👀",
+            reply_markup=create_result_btn())
 
 
 @bot.message_handler(commands=['allResult'])
@@ -41,8 +38,8 @@ def query(msg: types.CallbackQuery):
         add_dekan_voice(dekan_id)
         dekan = read_dekan_table()[dekan_id - 1]
         bot.send_message(msg.from_user.id, text=f"Siz {dekan[1]} ga ovoz berdingiz")
-        bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
-                       caption="Toshkent Davlat Stomatologiya Institutida eng yaxshi Yoshlar bilan ishlash bo'yicha dekam muoviniga ovoz bering.",
+        bot.send_photo(msg.from_user.id, photo=photo_2,
+                       caption=caption_2,
                        reply_markup=create_zamDekan_btn(),
                        )
         create_voter(msg, dekan_id)
@@ -56,7 +53,7 @@ def query(msg: types.CallbackQuery):
 
         result_all(bot, msg)
         bot.send_message(
-                    msg.from_user.id,
+            msg.from_user.id,
             text=f"Natijani tekshirishingiz mumkin!!!",
             reply_markup=create_result_btn())
 

@@ -2,7 +2,7 @@ import sqlite3
 
 from button import check_btn, create_dekan_btn
 from function import read_dekan_table, read_voter_table, update_voter_table, read_zamDekan_table
-from keys import channel, channel1, admin_id
+from keys import channel, channel1, admin_id, photo_1, caption_1
 
 
 def first_checker(bot, msg):
@@ -10,11 +10,11 @@ def first_checker(bot, msg):
     check_user1 = bot.get_chat_member(channel1, user_id=msg.from_user.id).status
     if check_user == 'member' or check_user == 'creator' or check_user == 'admin' or check_user == 'administrator':
         if check_user1 == 'member' or check_user1 == 'creator' or check_user1 == 'admin' or check_user1 == 'administrator':
-            bot.send_message(msg.from_user.id,
-                             text="Assalomu alaykun!\n"
-                                  "Toshkent Davlat Stomatologiya Institutida "
-                                  "eng yaxshi Dekanga ovoz berishingiz mumkin.",
-                             reply_markup=create_dekan_btn())
+            bot.send_photo(msg.from_user.id,
+                           photo=photo_1,
+                           caption=caption_1,
+                           parse_mode='HTML',
+                           reply_markup=create_dekan_btn())
         else:
             bot.send_message(msg.from_user.id,
                              text="Kanalimizga obuna bo'ling",
@@ -30,7 +30,7 @@ def checker_voter(bot, msg):
     voters = read_voter_table()
     for voter in voters:
         if voter[1] == user_id:
-            bot.send_message(user_id, text="Siz ovoz berib bo'ldingiz")
+            bot.send_message(user_id, text="Siz ovoz berib bo'lgansiz")
             return False
     return True
 
