@@ -1,5 +1,3 @@
-import sqlite3
-
 from button import check_btn, create_dekan_btn
 from function import read_dekan_table, read_voter_table, update_voter_table, read_zamDekan_table
 from keys import channel, channel1, admin_id, photo_1, caption_1

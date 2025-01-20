@@ -40,6 +40,7 @@ def query(msg: types.CallbackQuery):
         bot.send_message(msg.from_user.id, text=f"Siz {dekan[1]} ga ovoz berdingiz")
         bot.send_photo(msg.from_user.id, photo=photo_2,
                        caption=caption_2,
+                       parse_mode='HTML',
                        reply_markup=create_zamDekan_btn(),
                        )
         create_voter(msg, dekan_id)
@@ -52,15 +53,14 @@ def query(msg: types.CallbackQuery):
         update_voter_table(msg.from_user.id, zamDekan_id)
 
         result_all(bot, msg)
-        bot.send_message(
-            msg.from_user.id,
-            text=f"Natijani tekshirishingiz mumkin!!!",
-            reply_markup=create_result_btn())
 
         vote = send_admin_message(msg)
+
+        # We need one function. It's update channels message results.
+
         bot.send_message(admin_id, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
     elif msg.data == 'result':
-        bot.send_message(msg.from_user.id, text=result_all(bot, msg))
+        result_all(bot, msg)
 
 
 bot.polling()

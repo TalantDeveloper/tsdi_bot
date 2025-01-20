@@ -2,7 +2,7 @@ import sqlite3
 
 from telebot import types
 
-from keys import bot_url
+from keys import bot_url, photo_1, caption_1, caption_2, photo_2
 
 
 def create_table():  # Create Table
@@ -257,12 +257,43 @@ def delete_votes():
 # delete_votes()
 
 
-def update_voter_table(user_id, zamDekan):
+def update_voter_table(user_id, zamDekan_id):
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
         voter_query = """UPDATE voter SET zamDekan = ? WHERE user_id = ?;"""
-        cursor.execute(voter_query, (zamDekan, user_id))
+        cursor.execute(voter_query, (zamDekan_id, user_id))
         connection.commit()
+
+
+def create_channels_msg_id():
+    with sqlite3.connect('database.db') as connection:
+        cursor = connection.cursor()
+        query = """CREATE TABLE IF NOT EXISTS channel (id INTEGER PRIMARY KEY AUTOINCREMENT, channel_id INTEGER NOT NULL, message_id INTEGER NOT NULL, channel_name TEXT NOT NULL);"""
+        cursor.execute(query)
+        connection.commit()
+
+
+# create_channels_msg_id()
+
+
+def insert_channels_msg_id(channel_id, message_id, channel_name):
+    with sqlite3.connect('database.db') as connection:
+        cursor = connection.cursor()
+        query = """INSERT INTO channel (channel_id, message_id, channel_name) VALUES (?, ?, ?);"""
+        cursor.execute(query, (channel_id, message_id, channel_name))
+        connection.commit()
+
+
+# insert_channels_msg_id('-2481531999', 12, "majburiyobunaqilish")
+
+
+def read_channels_msg_id():
+    with sqlite3.connect('database.db') as connection:
+        cursor = connection.cursor()
+        query = """SELECT * FROM channel;"""
+        cursor.execute(query)
+        channels = cursor.fetchall()
+
 
 
 def result_all(bot, msg):
@@ -272,8 +303,10 @@ def result_all(bot, msg):
         result_dekan.add(
             types.InlineKeyboardButton(text=f"{dekan[1]} - {dekan[2]}", url=bot_url)
         )
-    bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
-                   caption="Fakultet dekanlari",
+    bot.send_photo(msg.from_user.id,
+                   photo=photo_1,
+                   caption=caption_1,
+                   parse_mode='HTML',
                    reply_markup=result_dekan)
     result_zamDekan = types.InlineKeyboardMarkup(row_width=1)
     zamDekans = read_zamDekan_table()
@@ -281,8 +314,10 @@ def result_all(bot, msg):
         result_zamDekan.add(
             types.InlineKeyboardButton(text=f"{zamDekan[1]} - {zamDekan[2]}", url=bot_url)
         )
-    bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
-                   caption="Yoshlar bilan ishlash bo'yicha dekan muovinlari",
+    bot.send_photo(msg.from_user.id,
+                   photo=photo_2,
+                   caption=caption_2,
+                   parse_mode='HTML',
                    reply_markup=result_zamDekan)
 
 
