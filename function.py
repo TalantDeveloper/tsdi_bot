@@ -295,7 +295,6 @@ def read_channels_msg_id():
         channels = cursor.fetchall()
 
 
-
 def result_all(bot, msg):
     result_dekan = types.InlineKeyboardMarkup(row_width=1)
     dekans = read_dekan_table()
