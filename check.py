@@ -2,9 +2,10 @@ from telebot import types, TeleBot
 from keys import TOKEN, admin_id, chat_id, photo_1, photo_2, caption_2, bot_url, channel_name, caption_1, channel_name1
 from button import create_zamDekan_btn, create_result_btn, create_dekan_btn, dekan_inline, zamDekan_inline
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
-    create_voter, update_voter_table, read_zamDekan_table, read_voter_table, insert_message, delete_message
+    create_voter, update_voter_table, read_zamDekan_table, read_voter_table, insert_message, delete_message, \
+    read_message
 from checkers import first_checker, checker_voter, cheklov_votes, send_admin_message
-from power import message_sendler
+from power import message_sendler, update_message
 
 token = TOKEN
 bot = TeleBot(token)
@@ -75,7 +76,14 @@ def query(msg: types.CallbackQuery):
         vote = send_admin_message(msg)
 
         # We need one function. It's update channels message results.
+        messages = read_message()
+        inline_keyboard = dekan_inline()
+        update_message(messages[0][1], messages[0][2], photo_1, caption_1, inline_keyboard)
+        update_message(messages[1][1], messages[1][2], photo_1, caption_1, inline_keyboard)
 
+        inline_keyboard = zamDekan_inline()
+        update_message(messages[2][1], messages[2][2], photo_2, caption_2, inline_keyboard)
+        update_message(messages[3][1], messages[3][2], photo_2, caption_2, inline_keyboard)
         bot.send_message(admin_id, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
     elif msg.data == 'result':
         result_all(bot, msg)

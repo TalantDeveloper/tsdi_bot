@@ -300,7 +300,7 @@ def read_message():
         return data
 
 
-print(read_message())
+# print(read_message())
 
 
 def delete_message():
