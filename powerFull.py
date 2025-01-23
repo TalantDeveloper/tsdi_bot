@@ -2,7 +2,7 @@ import requests
 from telebot import types
 
 from function import read_dekan_table, read_zamDekan_table
-from keys import bot_url, TOKEN
+from keys import bot_url, TOKEN, caption_1
 
 chat_id = "@majburiyobunaqilish"
 
@@ -85,9 +85,7 @@ def check_update():
     payload = {
         "chat_id": chat_id,
         "message_id": 13,
-        "caption": "<b><i>Toshent Davlat Stomatologiya Instituti</i></b>\n"
-                   " <b>Eng yaxshi dekan</b>ga ovoz <a href='http://talantbek.uz/en/'><b>bering</b></a>."
-                   "\n\n@tdsi_uz_2019\n@tsdi_official",
+        "caption": caption_1,
         "parse_mode": "HTML",
         "reply_markup": {'inline_keyboard': inline_keyboard}
 

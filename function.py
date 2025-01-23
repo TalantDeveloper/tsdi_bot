@@ -1,8 +1,9 @@
 import sqlite3
 
+import requests
 from telebot import types
 
-from keys import bot_url, photo_1, caption_1, caption_2, photo_2
+from keys import bot_url, photo_1, caption_1, caption_2, photo_2, TOKEN, chat_id
 
 
 def create_table():  # Create Table
@@ -328,3 +329,17 @@ def create_voter(msg, dekan_id):
     else:
         name = msg.from_user.first_name
     insert_voter_table(user_id, name, dekan_id)
+
+
+def last_message_id():
+    base_url = f'https://api.telegram.org/bot{TOKEN}/getUpdates'
+
+    parameters = {
+        'offset': chat_id,
+        'limit': '100',
+    }
+    response = requests.get(base_url, data=parameters)
+    first = response.json()
+    second = first['result']
+    length = len(second)
+    return second[length - 1]['channel_post']['message_id']
