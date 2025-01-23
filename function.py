@@ -3,7 +3,7 @@ import sqlite3
 import requests
 from telebot import types
 
-from keys import bot_url, photo_1, caption_1, caption_2, photo_2, TOKEN, chat_id
+from keys import bot_url, photo_1, caption_1, caption_2, photo_2, TOKEN
 
 
 def create_table():  # Create Table
@@ -266,32 +266,32 @@ def update_voter_table(user_id, zamDekan_id):
         connection.commit()
 
 
-def create_channels_msg_id():
+def create_messages():
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
-        query = """CREATE TABLE IF NOT EXISTS channel (id INTEGER PRIMARY KEY AUTOINCREMENT, channel_id INTEGER NOT NULL, message_id INTEGER NOT NULL, channel_name TEXT NOT NULL);"""
+        query = """CREATE TABLE IF NOT EXISTS message (id INTEGER PRIMARY KEY AUTOINCREMENT, channel TEXT NOT NULL, message_id INTEGER NOT NULL);"""
         cursor.execute(query)
         connection.commit()
 
 
-# create_channels_msg_id()
+# create_messages()
 
 
-def insert_channels_msg_id(channel_id, message_id, channel_name):
+def insert_message(channel, message_id):
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
-        query = """INSERT INTO channel (channel_id, message_id, channel_name) VALUES (?, ?, ?);"""
-        cursor.execute(query, (channel_id, message_id, channel_name))
+        query = """INSERT INTO message (channel, message_id) VALUES (?, ?);"""
+        cursor.execute(query, (channel, message_id))
         connection.commit()
 
 
 # insert_channels_msg_id('-2481531999', 12, "majburiyobunaqilish")
 
 
-def read_channels_msg_id():
+def read_message():
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
-        query = """SELECT * FROM channel;"""
+        query = """SELECT * FROM message;"""
         cursor.execute(query)
         channels = cursor.fetchall()
         data = []
@@ -299,20 +299,21 @@ def read_channels_msg_id():
             data.append(channel)
         return data
 
-print(read_channels_msg_id())
+
+print(read_message())
 
 
-def delete_channel_msg_id():
-    channels = read_channels_msg_id()
-    for channel in channels:
+def delete_message():
+    messages = read_message()
+    for message in messages:
         with sqlite3.connect('database.db') as connection:
             cursor = connection.cursor()
-            query = f"""DELETE FROM channel WHERE id = {channel[0]};"""
+            query = f"""DELETE FROM message WHERE id = {message[0]};"""
             cursor.execute(query)
             connection.commit()
 
 
-# delete_channel_msg_id()
+# delete_message()
 
 
 def result_all(bot, msg):
@@ -350,7 +351,7 @@ def create_voter(msg, dekan_id):
     insert_voter_table(user_id, name, dekan_id)
 
 
-def last_message_id():
+def last_message_id(chat_id):
     base_url = f'https://api.telegram.org/bot{TOKEN}/getUpdates'
 
     parameters = {
@@ -362,3 +363,6 @@ def last_message_id():
     second = first['result']
     length = len(second)
     return second[length - 1]['channel_post']['message_id']
+
+
+# print(last_message_id(-1002481531999))

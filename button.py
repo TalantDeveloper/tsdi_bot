@@ -1,6 +1,6 @@
 from telebot import types
 from function import read_dekan_table, read_zamDekan_table
-from keys import channel_url, channel_url1
+from keys import channel_url, channel_url1, bot_url
 
 check_btn = types.InlineKeyboardMarkup(row_width=1)
 
@@ -35,4 +35,28 @@ def create_result_btn():
     result_btn = types.InlineKeyboardMarkup(row_width=1)
     result_btn.add(types.InlineKeyboardButton(text="Natijani tekshirish", callback_data='result'))
     return result_btn
+
+
+def dekan_inline():
+    inline_keyboard = []
+    dekans = read_dekan_table()
+    for dekan in dekans:
+        btn = {
+            'text': f"{dekan[1]} - {dekan[2]}",
+            'url': bot_url,
+        }
+        inline_keyboard.append([btn])
+    return inline_keyboard
+
+
+def zamDekan_inline():
+    inline_keyboard = []
+    zamDekans = read_zamDekan_table()
+    for zamDekan in zamDekans:
+        btn = {
+            'text': f"{zamDekan[1]} - {zamDekan[2]}",
+            'url': bot_url,
+        }
+        inline_keyboard.append([btn])
+    return inline_keyboard
 

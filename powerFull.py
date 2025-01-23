@@ -2,9 +2,9 @@ import requests
 from telebot import types
 
 from function import read_dekan_table, read_zamDekan_table
-from keys import bot_url, TOKEN, caption_1
+from keys import bot_url, TOKEN, caption_1, channel_name, photo_1
 
-chat_id = "@majburiyobunaqilish"
+chat_id = "-1002481531999"
 
 
 def update_result(bot, msg):
@@ -83,8 +83,8 @@ def check_update():
 
     # Define the new caption and inline keyboard
     payload = {
-        "chat_id": chat_id,
-        "message_id": 13,
+        "chat_id": channel_name,
+        "message_id": 67,
         "caption": caption_1,
         "parse_mode": "HTML",
         "reply_markup": {'inline_keyboard': inline_keyboard}
@@ -95,4 +95,4 @@ def check_update():
     print(response.json())
 
 
-check_update()
+# check_update()

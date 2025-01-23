@@ -1,9 +1,10 @@
 from telebot import types, TeleBot
-from keys import TOKEN, admin_id, chat_id, photo_2, caption_2
-from button import create_zamDekan_btn, create_result_btn, create_dekan_btn
+from keys import TOKEN, admin_id, chat_id, photo_1, photo_2, caption_2, bot_url, channel_name, caption_1, channel_name1
+from button import create_zamDekan_btn, create_result_btn, create_dekan_btn, dekan_inline, zamDekan_inline
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
-    create_voter, update_voter_table, read_zamDekan_table, read_voter_table
+    create_voter, update_voter_table, read_zamDekan_table, read_voter_table, insert_message, delete_message
 from checkers import first_checker, checker_voter, cheklov_votes, send_admin_message
+from power import message_sendler
 
 token = TOKEN
 bot = TeleBot(token)
@@ -28,10 +29,22 @@ def getAllResult(msg: types.Message):
             bot.send_message(admin_id, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
 
 
-# @bot.message_handler(commands=['sendMessage'])
-# def sendMessage(msg: types.Message):
-#     if msg.from_user.id == admin_id:
-#         pass
+@bot.message_handler(commands=['sendMessage'])
+def send_message(msg: types.Message):
+    if msg.from_user.id == admin_id:
+        delete_message()
+        inline_keyboard = dekan_inline()
+        message_id_1 = message_sendler(channel_name, photo_1, caption_1, inline_keyboard)
+        insert_message(channel_name, message_id_1)
+        message_id_2 = message_sendler(channel_name1, photo_1, caption_1, inline_keyboard)
+        insert_message(channel_name1, message_id_2)
+        inline_keyboard = zamDekan_inline()
+
+        message_id_3 = message_sendler(channel_name, photo_2, caption_2, inline_keyboard)
+        insert_message(channel_name, message_id_3)
+        message_id_4 = message_sendler(channel_name1, photo_2, caption_2, inline_keyboard)
+        insert_message(channel_name1, message_id_4)
+
 
 @bot.callback_query_handler(func=lambda x: x.data)
 def query(msg: types.CallbackQuery):
