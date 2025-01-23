@@ -294,6 +294,25 @@ def read_channels_msg_id():
         query = """SELECT * FROM channel;"""
         cursor.execute(query)
         channels = cursor.fetchall()
+        data = []
+        for channel in channels:
+            data.append(channel)
+        return data
+
+print(read_channels_msg_id())
+
+
+def delete_channel_msg_id():
+    channels = read_channels_msg_id()
+    for channel in channels:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+            query = f"""DELETE FROM channel WHERE id = {channel[0]};"""
+            cursor.execute(query)
+            connection.commit()
+
+
+# delete_channel_msg_id()
 
 
 def result_all(bot, msg):

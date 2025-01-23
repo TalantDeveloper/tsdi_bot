@@ -28,6 +28,11 @@ def getAllResult(msg: types.Message):
             bot.send_message(admin_id, text=f"{vote[0]}-{vote[1]} @{vote[2]} <=>{vote[3]} <=>{vote[4]}")
 
 
+# @bot.message_handler(commands=['sendMessage'])
+# def sendMessage(msg: types.Message):
+#     if msg.from_user.id == admin_id:
+#         pass
+
 @bot.callback_query_handler(func=lambda x: x.data)
 def query(msg: types.CallbackQuery):
     bot.delete_message(msg.from_user.id, msg.message.id)
