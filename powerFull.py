@@ -12,7 +12,7 @@ def update_result(bot, msg):
     dekans = read_dekan_table()
     for dekan in dekans:
         result_dekan.add(
-            types.InlineKeyboardButton(text=f"{dekan[1]} - {dekan[2]}", url=bot_url)
+            types.InlineKeyboardButton(text=f"{dekan[2]} - {dekan[1]}", url=bot_url)
         )
 
     bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
@@ -23,7 +23,7 @@ def update_result(bot, msg):
     zamDekans = read_zamDekan_table()
     for zamDekan in zamDekans:
         result_zamDekan.add(
-            types.InlineKeyboardButton(text=f"{zamDekan[1]} - {zamDekan[2]}", url=bot_url)
+            types.InlineKeyboardButton(text=f"{zamDekan[2]} - {zamDekan[1]}", url=bot_url)
         )
 
     bot.send_photo(msg.from_user.id, photo="https://tsdi.uz/assets/images/slider/stom.jpg",
@@ -50,7 +50,7 @@ def check_update():
     dekans = read_dekan_table()
     for dekan in dekans:
         btn = {
-            'text': f"{dekan[1]} - {dekan[2]}",
+            'text': f"{dekan[2]} - {dekan[1]}",
             'url': bot_url,
         }
         inline_keyboard.append([btn])

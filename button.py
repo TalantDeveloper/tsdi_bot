@@ -16,7 +16,7 @@ def create_dekan_btn():
     dekans = read_dekan_table()
     for dekan in dekans:
         check_dekan.add(
-            types.InlineKeyboardButton(text=f"{dekan[1]} - {dekan[2]}", callback_data=f"dekan{dekan[0]}")
+            types.InlineKeyboardButton(text=f"{dekan[2]} - {dekan[1]}", callback_data=f"dekan{dekan[0]}")
         )
     return check_dekan
 
@@ -26,7 +26,7 @@ def create_zamDekan_btn():
     zamDekans = read_zamDekan_table()
     for zamDekan in zamDekans:
         check_zamDekan.add(
-            types.InlineKeyboardButton(text=f"{zamDekan[1]} - {zamDekan[2]}", callback_data=f"zamDekan{zamDekan[0]}")
+            types.InlineKeyboardButton(text=f"{zamDekan[2]} - {zamDekan[1]}", callback_data=f"zamDekan{zamDekan[0]}")
         )
     return check_zamDekan
 
@@ -42,7 +42,7 @@ def dekan_inline():
     dekans = read_dekan_table()
     for dekan in dekans:
         btn = {
-            'text': f"{dekan[1]} - {dekan[2]}",
+            'text': f"{dekan[2]} - {dekan[1]}",
             'url': bot_url,
         }
         inline_keyboard.append([btn])
@@ -54,7 +54,7 @@ def zamDekan_inline():
     zamDekans = read_zamDekan_table()
     for zamDekan in zamDekans:
         btn = {
-            'text': f"{zamDekan[1]} - {zamDekan[2]}",
+            'text': f"{zamDekan[2]} - {zamDekan[1]}",
             'url': bot_url,
         }
         inline_keyboard.append([btn])
