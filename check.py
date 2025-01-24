@@ -1,6 +1,6 @@
 from telebot import types, TeleBot
-from keys import TOKEN, admin_id, chat_id, photo_1, photo_2, caption_2, bot_url, channel_name, caption_1, channel_name1
-from button import create_zamDekan_btn, create_result_btn, create_dekan_btn, dekan_inline, zamDekan_inline
+from keys import TOKEN, admin_id, photo_1, photo_2, caption_2, channel_name, caption_1, channel_name1
+from button import create_zamDekan_btn, create_result_btn, dekan_inline, zamDekan_inline
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
     create_voter, update_voter_table, read_zamDekan_table, read_voter_table, insert_message, delete_message, \
     read_message

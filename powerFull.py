@@ -2,7 +2,7 @@ import requests
 from telebot import types
 
 from function import read_dekan_table, read_zamDekan_table
-from keys import bot_url, TOKEN, caption_1, channel_name, photo_1
+from keys import bot_url, TOKEN, caption_1, channel_name
 
 chat_id = "-1002481531999"
 
@@ -54,30 +54,6 @@ def check_update():
             'url': bot_url,
         }
         inline_keyboard.append([btn])
-
-    # payload = {
-    #     "chat_id": '-1002481531999',
-    #     "message_id": 12,
-    #     "media": {
-    #         "type": "photo",
-    #         "media": "https://tsdi.uz/assets/images/slider/stom.jpg"
-    #     },
-    #     'reply_markup': {'inline_keyboard': inline_keyboard},
-    # }
-    #
-    # response = requests.post(url, json=payload)
-    # print(response.json())
-    # payload = {
-    #     "chat_id": chat_id,
-    #     "message_id": 11,
-    #     "media": {
-    #         "type": "photo",
-    #         "media": "https://tsdi.uz/assets/images/slider/stom.jpg"
-    #     },
-    #     "caption": "Updated caption for this message with formatting.",
-    # }
-    # response = requests.post(url1, json=payload)
-    # print(response.json())
 
     url = f"https://api.telegram.org/bot{TOKEN}/editMessageCaption"
 
