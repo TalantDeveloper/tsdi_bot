@@ -147,7 +147,7 @@ def add_dekan_voice(dekan_id):
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
         update_query = """UPDATE dekan SET voice = ? where id = ?;"""
-        voice = 1
+        voice = dekan[2] + 1
         cursor.execute(update_query, (voice, dekan_id))
         connection.commit()
 

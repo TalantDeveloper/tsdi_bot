@@ -1,7 +1,5 @@
 import requests
-
-from function import read_dekan_table
-from keys import TOKEN, channel_name, bot_url, caption_1, photo_1
+from keys import TOKEN
 
 
 def message_sendler(channel, image, text, btn):
