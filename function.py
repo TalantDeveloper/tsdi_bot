@@ -147,12 +147,17 @@ def add_dekan_voice(dekan_id):
     with sqlite3.connect('database.db') as connection:
         cursor = connection.cursor()
         update_query = """UPDATE dekan SET voice = ? where id = ?;"""
-        voice = dekan[2] + 1
+        voice = 1
         cursor.execute(update_query, (voice, dekan_id))
         connection.commit()
 
 
 # add_dekan_voice(1)
+# add_dekan_voice(2)
+# add_dekan_voice(3)
+# add_dekan_voice(4)
+# add_dekan_voice(5)
+# add_dekan_voice(6)
 # print(read_dekan_table())
 
 
@@ -208,6 +213,9 @@ def add_zamDekan_voice(zamDekan_id):
 
 
 # add_zamDekan_voice(1)
+# add_zamDekan_voice(2)
+# add_zamDekan_voice(3)
+# add_zamDekan_voice(4)
 # print(read_zamDekan_table())
 
 
