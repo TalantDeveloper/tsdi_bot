@@ -3,7 +3,7 @@ from keys import TOKEN, admin_id, photo_1, photo_2, caption_2, channel_name, cap
 from button import create_zamDekan_btn, create_result_btn, dekan_inline, zamDekan_inline
 from function import add_dekan_voice, add_zamDekan_voice, read_dekan_table, result_all, \
     create_voter, update_voter_table, read_zamDekan_table, read_voter_table, insert_message, delete_message, \
-    read_message
+    read_message, zero_voice, delete_votes
 from checkers import first_checker, checker_voter, cheklov_votes, send_admin_message
 from power import message_sendler, update_message
 
@@ -45,6 +45,20 @@ def send_message(msg: types.Message):
         insert_message(channel_name, message_id_3)
         message_id_4 = message_sendler(channel_name1, photo_2, caption_2, inline_keyboard)
         insert_message(channel_name1, message_id_4)
+
+
+@bot.message_handler(commands=['zeroVoice'])
+def zeroVoiceAll(msg: types.Message):
+    if msg.from_user.id == admin_id:
+        zero_voice()
+        bot.send_message(admin_id, text="Amringiz bosh ustiga")
+
+
+@bot.message_handler(commands=['deleteVoters'])
+def deleteVoters(msg: types.Message):
+    if msg.from_user.id == admin_id:
+        delete_votes()
+        bot.send_message(admin_id, text="Amringiz bosh ustiga :)")
 
 
 @bot.callback_query_handler(func=lambda x: x.data)

@@ -374,3 +374,22 @@ def last_message_id(chat_id):
 
 
 # print(last_message_id(-1002481531999))
+
+
+def zero_voice():
+    dekans = read_dekan_table()
+    for dekan in dekans:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+            update_query = """UPDATE dekan SET voice = ? where id = ?;"""
+            voice = 0
+            cursor.execute(update_query, (voice, dekan[0]))
+            connection.commit()
+    zamDekans = read_zamDekan_table()
+    for zamDekan in zamDekans:
+        with sqlite3.connect('database.db') as connection:
+            cursor = connection.cursor()
+            update_zamDekan_query = """UPDATE zamDekan SET voice = ? where id = ?;"""
+            voice = 0
+            cursor.execute(update_zamDekan_query, (voice, zamDekan[0]))
+            connection.commit()
